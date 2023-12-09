@@ -6,9 +6,9 @@
 
 这个是我个人使用的配置文件，使用的主要是 98版五笔 作为输入方案
 
-根据(这个仓库)[https://github.com/arzyu/rime-wubi98]修改而来
+根据[这个仓库](https://github.com/arzyu/rime-wubi98)修改而来
 
-码表来自于(这里仓库)[https://github.com/omgredfog/98wubi]
+码表来自于[这里仓库](https://github.com/omgredfog/98wubi)
 
 ---
 
