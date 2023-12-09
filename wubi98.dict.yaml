@@ -3,7 +3,7 @@
 # 20190214
 
 ---
-name: wubi98_ci
+name: wubi98
 version: "2.0"
 sort: by_weight
 columns:
