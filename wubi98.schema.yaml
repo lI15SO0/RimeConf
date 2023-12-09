@@ -1,0 +1,100 @@
+schema:
+  schema_id: wubi98
+  name: "五笔98"
+  version: "0.1"
+  author:
+    - 发明人：王永民
+  description: |
+    五笔98版
+  dependencies:
+    - pinyin_simp
+
+switches:
+  - name: zh_trad
+    reset: 0    # 初始状态为 0: 简 -> 简 1: 简 -> 繁
+    states: [ 简体, 繁体 ]
+  - name: ascii_mode
+    reset: 0
+    states: [ 中文, 英文 ]
+  - name: full_shape
+    states: [ 半角, 全角 ]
+  - name: extended_charset
+    states: [ 通用, 增廣 ]
+  - name: ascii_punct
+    states: [ 。，, ．， ]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - reverse_lookup_translator
+    - table_translator
+    - lua_translator@date_translator # 自定义系统变量输出
+  filters:
+    - simplifier@tradition
+    # - simplifier
+    - uniquifier
+
+speller:
+  auto_select: true
+  max_code_length: 4
+
+translator:
+  dictionary: wubi98
+  enable_charset_filter: true
+  enable_encoder: true
+  encode_commit_history: true
+  enable_completion: true
+  enable_sentence: false
+  enable_user_dict: true
+  max_phrase_length: 4
+  disable_user_dict_for_patterns:
+    - "^z.*$"
+    - "^[a-y]{1,2}$"
+
+tradition:
+  opencc_config: s2t.json  # 简 -> 繁
+  #  opencc_config: s2hk.json  # 繁 -> 香港
+  #  opencc_config: t2s.json   # 繁 -> 简
+  #  opencc_config: t2tw.json  # 繁 -> 台湾
+  #  opencc_config: t2hk.json  # 繁 -> 香港
+  #  opencc_config: s2tw.json  # 簡 -> 臺灣標準
+  #  opencc_config: s2twp.json  # 簡 -> 臺灣片語
+  option_name: zh_trad
+
+reverse_lookup:
+  dictionary: pinyin_simp
+  prefix: "z"
+  tips: "「反查」"
+  preedit_format:
+    # 输入时将 nv, lv 等替换为 nü, lü
+    - xform/([nljqxy])v/$1ü/
+  comment_format:
+    # 让反查结果只显示最长的一个
+    # 如“你”字只显示 "wqiy"，而不是 "wq wqi wqiy"
+    - xform/^(\S+\s)*(\S+)$/$2/
+
+recognizer:
+  import_preset: default
+  patterns:
+    reverse_lookup: "^z[a-z]*$"
+    calculator: "^coco.*$" # 计算器
+punctuator:
+  import_preset: default
+
+key_binder:
+  import_preset: default
