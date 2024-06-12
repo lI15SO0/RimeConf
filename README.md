@@ -8,7 +8,7 @@
 
 根据[这个仓库](https://github.com/arzyu/rime-wubi98)修改而来
 
-码表来自于[这里仓库](https://github.com/omgredfog/98wubi)
+码表来自于[这里仓库](https://github.com/yanhuacuo/98wubi-tables)
 
 ---
 
